@@ -11,18 +11,14 @@ protocol DetailViewModelProtocol {
     var name: String { get }
     var info: String { get }
     var image: Data? { get }
-    var isFavorite: Bool { get }
-    var viewModelDidChange: ((DetailViewModelProtocol) -> Void)? { get set }
+    var isFavorite: Box<Bool> { get }
     
     init(hero: Hero)
     
     func favoriteButtonPressed()
-    func buttonPressed()
 }
 
 class DetailViewModel: DetailViewModelProtocol {
-    
-    
     var name: String {
         hero.name
     }
@@ -35,28 +31,17 @@ class DetailViewModel: DetailViewModelProtocol {
         ImageManager.shared.fetchImage(hero.image)
     }
     
-    var isFavorite: Bool {
-        get {
-            DataManager.shared.getStatus(id: hero.id)
-        } set {
-            DataManager.shared.setStatus(id: hero.id, status: newValue)
-            viewModelDidChange?(self)
-        }
-    }
-    
-    var viewModelDidChange: ((DetailViewModelProtocol) -> Void)?
+    var isFavorite: Box<Bool>
     
     private let hero: Hero
     
     required init(hero: Hero) {
         self.hero = hero
+        isFavorite = Box(DataManager.shared.getStatus(id: hero.id))
     }
     
     func favoriteButtonPressed() {
-        isFavorite.toggle()
-    }
-    
-    func buttonPressed() {
-        isFavorite.toggle()
+        isFavorite.value.toggle()
+        DataManager.shared.setStatus(id: hero.id, status: isFavorite.value)
     }
 }

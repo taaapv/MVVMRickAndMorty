@@ -15,14 +15,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var button: UIButton!
     
-    var viewModel: DetailViewModelProtocol! {
-        didSet {
-            viewModel.viewModelDidChange = { [unowned self] viewModel in
-                self.setColorForFavoriteButton(viewModel.isFavorite)
-                self.setTitleForButton(viewModel.isFavorite)
-            }
-        }
-    }
+    var viewModel: DetailViewModelProtocol! 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +28,14 @@ class DetailViewController: UIViewController {
         viewModel.favoriteButtonPressed()
     }
     
-    @IBAction func buttonPressed(_ sender: UIButton) {
-        viewModel.buttonPressed()
-    }
-    
     private func setupUI() {
-        setColorForFavoriteButton(viewModel.isFavorite)
-        setTitleForButton(viewModel.isFavorite)
+        setColorForFavoriteButton(viewModel.isFavorite.value)
+        setTitleForButton(viewModel.isFavorite.value)
+        
+        viewModel.isFavorite.bind { [unowned self] value in
+            setColorForFavoriteButton(value)
+            setTitleForButton(value)
+        }
         
         nameLabel.text = viewModel.name
         infoLabel.text = viewModel.info
@@ -54,6 +48,6 @@ class DetailViewController: UIViewController {
     }
     
     private func setTitleForButton(_ status: Bool) {
-        button.titleLabel?.text = status ? "В избранном" : "Добавить в избранное"
+        button.setTitle(status ? "В избранном" : "Добавить в избранное", for: .normal)
     }
 }

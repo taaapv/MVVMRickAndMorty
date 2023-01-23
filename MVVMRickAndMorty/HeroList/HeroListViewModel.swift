@@ -41,7 +41,7 @@ class HeroListViewModel: HeroListViewModelProtocol {
     }
     
     func searchUpdate(text: String?, isActive: Bool) {
-        guard let text = text, isActive == true else { return }
+        guard let text = text, !text.isEmpty, isActive == true else { return }
         isFiltering = true
         searchText = text
         filterContentForSearchText(searchText)

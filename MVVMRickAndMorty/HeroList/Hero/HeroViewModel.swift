@@ -23,14 +23,6 @@ class HeroViewModel: HeroViewModelProtocol {
         ImageManager.shared.fetchImage(hero.image)
     }
     
-    var searchBarIsEmpty: Bool {
-        guard let text = searchController.searchBar.text else { return false }
-        return text.isEmpty
-    }
-    var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
-    
     private let hero: Hero
     
     required init(hero: Hero) {

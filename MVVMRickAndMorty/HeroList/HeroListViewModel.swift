@@ -10,8 +10,9 @@ import Foundation
 protocol HeroListViewModelProtocol: AnyObject {
     var heroList: [Hero] { get }
     var filteredHeros: [Hero] { get }
+    var isFiltering: Bool { get }
     
-    func searchUpdate(text: String?, completion: @escaping () -> Void)
+    func searchUpdate(text: String?, isActive: Bool)
     func filterContentForSearchText(_ searchText: String)
     
     func fetchHeroList(completion: @escaping() -> Void)
@@ -24,19 +25,8 @@ protocol HeroListViewModelProtocol: AnyObject {
 class HeroListViewModel: HeroListViewModelProtocol {
     var heroList: [Hero] = []
     var filteredHeros: [Hero] = []
-    
-    var isFiltering: Bool {
-        return searchController.isActive && !searchBarIsEmpty
-    }
-    
-    func searchUpdate(text: String?, completion: @escaping () -> Void) {
-        guard let text = text else {
-            return
-        }
-        
-    }
-    
-    
+    var isFiltering: Bool = false
+    var searchText: String = ""
     
     func fetchHeroList(completion: @escaping () -> Void) {
         NetworkManager.shared.fetchData(dataType: RickAndMorty.self, with: Link.rickAndMorty.rawValue) { [unowned self] result in
@@ -50,6 +40,13 @@ class HeroListViewModel: HeroListViewModelProtocol {
         }
     }
     
+    func searchUpdate(text: String?, isActive: Bool) {
+        guard let text = text, isActive == true else { return }
+        isFiltering = true
+        searchText = text
+        filterContentForSearchText(searchText)
+    }
+
     func filterContentForSearchText(_ searchText: String) {
         filteredHeros = heroList.filter { hero in
             hero.name.lowercased().contains(searchText.lowercased())
@@ -57,11 +54,11 @@ class HeroListViewModel: HeroListViewModelProtocol {
     }
     
     func numberOfRows() -> Int {
-        isFiltering ? filteredHeroes.count : heroList.count
+        isFiltering ? filteredHeros.count : heroList.count
     }
     
     func cellViewModel(at indexPath: IndexPath) -> HeroViewModelProtocol {
-        let hero = isFiltering ? filteredHeroes[indexPath.row] : heroList[indexPath.row]
+        let hero = isFiltering ? filteredHeros[indexPath.row] : heroList[indexPath.row]
         return HeroViewModel(hero: hero)
     }
     

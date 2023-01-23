@@ -12,8 +12,6 @@ class HeroListViewController: UIViewController {
     
     private let searchController = UISearchController(searchResultsController: nil)
     
-
-    
     private var activityIndicator: UIActivityIndicatorView!
     
     private var viewModel: HeroListViewModelProtocol! {
@@ -23,9 +21,7 @@ class HeroListViewController: UIViewController {
                 self.activityIndicator.stopAnimating()
             }
             
-            viewModel.searchUpdate(text: searchController.searchBar.text) {
-                
-            }
+            
         }
     }
     
@@ -108,7 +104,7 @@ extension HeroListViewController: UITableViewDelegate {
 
 extension HeroListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        viewModel.filterContentForSearchText(searchController.searchBar.text!)
+        viewModel.searchUpdate(text: searchController.searchBar.text, isActive: searchController.isActive)
         tableView.reloadData()
     }
 }

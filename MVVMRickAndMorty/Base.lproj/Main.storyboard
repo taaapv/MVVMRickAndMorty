@@ -60,12 +60,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wWh-VS-4GS">
-                                <rect key="frame" x="163.5" y="44" width="48" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ImX-z2-tak">
                                 <rect key="frame" x="67.5" y="98" width="240" height="240"/>
                                 <constraints>
@@ -91,10 +85,8 @@
                         <viewLayoutGuide key="safeArea" id="UdJ-7m-RDF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ImX-z2-tak" firstAttribute="top" secondItem="wWh-VS-4GS" secondAttribute="bottom" constant="30" id="1B7-th-TA9"/>
-                            <constraint firstItem="wWh-VS-4GS" firstAttribute="top" secondItem="UdJ-7m-RDF" secondAttribute="top" id="1e3-R3-erN"/>
-                            <constraint firstItem="wWh-VS-4GS" firstAttribute="centerX" secondItem="7pb-Tu-0nV" secondAttribute="centerX" id="2sw-lq-e4P"/>
                             <constraint firstItem="UGD-S5-5F6" firstAttribute="top" secondItem="UdJ-7m-RDF" secondAttribute="top" constant="244" id="9Oy-kP-jpD"/>
+                            <constraint firstItem="ImX-z2-tak" firstAttribute="top" secondItem="UdJ-7m-RDF" secondAttribute="top" constant="54" id="Fuq-jT-eAF"/>
                             <constraint firstItem="UGD-S5-5F6" firstAttribute="leading" secondItem="UdJ-7m-RDF" secondAttribute="leading" constant="251" id="LXn-3E-rLq"/>
                             <constraint firstItem="UdJ-7m-RDF" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="REU-9l-3bp" secondAttribute="trailing" constant="20" id="cMH-Vk-5Gh"/>
                             <constraint firstItem="REU-9l-3bp" firstAttribute="top" secondItem="ImX-z2-tak" secondAttribute="bottom" constant="30" id="eZj-HQ-0Me"/>
@@ -109,7 +101,6 @@
                         <outlet property="favoriteButton" destination="UGD-S5-5F6" id="tqs-mh-VU2"/>
                         <outlet property="heroImage" destination="ImX-z2-tak" id="IJI-9c-5lj"/>
                         <outlet property="infoLabel" destination="REU-9l-3bp" id="ULI-al-CKu"/>
-                        <outlet property="nameLabel" destination="wWh-VS-4GS" id="fpq-O3-Q1G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZHf-kU-qrN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

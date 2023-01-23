@@ -13,14 +13,12 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var heroImage: UIImageView!
     @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
-    @IBOutlet weak var button: UIButton!
     
     var viewModel: DetailViewModelProtocol! 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.tintColor = .white
-        button.layer.cornerRadius = 20
         setupUI()
     }
 
@@ -30,14 +28,11 @@ class DetailViewController: UIViewController {
     
     private func setupUI() {
         setColorForFavoriteButton(viewModel.isFavorite.value)
-        setTitleForButton(viewModel.isFavorite.value)
         
         viewModel.isFavorite.bind { [unowned self] value in
             setColorForFavoriteButton(value)
-            setTitleForButton(value)
         }
-        
-        nameLabel.text = viewModel.name
+        title = viewModel.name
         infoLabel.text = viewModel.info
         guard let imageData = viewModel.image else { return }
         heroImage.image = UIImage(data: imageData)
@@ -45,9 +40,5 @@ class DetailViewController: UIViewController {
     
     private func setColorForFavoriteButton(_ status: Bool) {
         favoriteButton.tintColor = status ? .red : .gray
-    }
-    
-    private func setTitleForButton(_ status: Bool) {
-        button.setTitle(status ? "В избранном" : "Добавить в избранное", for: .normal)
     }
 }

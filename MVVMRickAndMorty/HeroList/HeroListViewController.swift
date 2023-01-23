@@ -8,15 +8,23 @@
 import UIKit
 
 class HeroListViewController: UIViewController {
-
     @IBOutlet weak var tableView: UITableView!
     
+    private let searchController = UISearchController(searchResultsController: nil)
+    
+
+    
     private var activityIndicator: UIActivityIndicatorView!
+    
     private var viewModel: HeroListViewModelProtocol! {
         didSet {
             viewModel.fetchHeroList { [unowned self] in
                 self.tableView.reloadData()
                 self.activityIndicator.stopAnimating()
+            }
+            
+            viewModel.searchUpdate(text: searchController.searchBar.text) {
+                
             }
         }
     }
@@ -27,6 +35,7 @@ class HeroListViewController: UIViewController {
         tableView.delegate = self
         tableView.rowHeight = 100
         setupNavigationBar()
+        setupSearchController()
         
         activityIndicator = showActivityIndicator(in: view)
         viewModel = HeroListViewModel()
@@ -49,6 +58,9 @@ class HeroListViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
+        title = "Rick & Morty"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         let navigBarAppearance = UINavigationBarAppearance()
         navigBarAppearance.configureWithOpaqueBackground()
         navigBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -57,6 +69,20 @@ class HeroListViewController: UIViewController {
         
         navigationController?.navigationBar.standardAppearance = navigBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigBarAppearance
+    }
+    
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search"
+        searchController.searchBar.tintColor = .white
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
+        if let textField = searchController.searchBar.value(forKey: "searchField") as? UITextField {
+            textField.font = UIFont.boldSystemFont(ofSize: 17)
+            textField.textColor = .darkGray
+        }
     }
 }
 
@@ -77,5 +103,12 @@ extension HeroListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let viewModel = viewModel.detailViewModel(at: indexPath)
         performSegue(withIdentifier: "showDetail", sender: viewModel)
+    }
+}
+
+extension HeroListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        viewModel.filterContentForSearchText(searchController.searchBar.text!)
+        tableView.reloadData()
     }
 }

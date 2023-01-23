@@ -8,27 +8,37 @@
 import Foundation
 
 struct RickAndMorty: Codable {
+    let info: Info
     let results: [Hero]
+}
+
+struct Info: Codable {
+    let pages: Int
+    let next: String?
+    let prev: String?
 }
 
 struct Hero: Codable {
     let id: Int
     let name: String
-    let status: Status
-    let species: Species
+    let status: String
+    let species: String
     let type: String
-    let gender: Gender
+    let gender: String
     let origin, location: Location
     let image: String
     let episode: [String]
     let url: String
     let created: String
-}
-
-enum Gender: String, Codable {
-    case female = "Female"
-    case male = "Male"
-    case unknown = "unknown"
+    
+    var description: String {
+        """
+        Species: \(species)
+        Gender: \(gender)
+        Origin: \(origin.name)
+        Status: \(origin.name)
+        """
+    }
 }
 
 struct Location: Codable {
@@ -36,14 +46,17 @@ struct Location: Codable {
     let url: String
 }
 
-enum Species: String, Codable {
-    case alien = "Alien"
-    case human = "Human"
-}
+struct Episode: Codable {
+    let id: Int
+    let name, airDate, episode: String
+    let characters: [String]
+    let url: String
+    let created: String
 
-enum Status: String, Codable {
-    case alive = "Alive"
-    case dead = "Dead"
-    case unknown = "unknown"
+    enum CodingKeys: String, CodingKey {
+        case id, name
+        case airDate = "air_date"
+        case episode, characters, url, created
+    }
 }
 

@@ -24,7 +24,7 @@ class DetailViewModel: DetailViewModelProtocol {
     }
     
     var info: String {
-        "Species: \(hero.species.rawValue), gender: \(hero.gender.rawValue), origin: \(hero.origin.name)"
+        hero.description
     }
     
     var image: Data? {

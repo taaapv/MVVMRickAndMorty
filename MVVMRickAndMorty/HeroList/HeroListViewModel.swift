@@ -9,6 +9,10 @@ import Foundation
 
 protocol HeroListViewModelProtocol: AnyObject {
     var heroList: [Hero] { get }
+    var filteredHeros: [Hero] { get }
+    
+    func searchUpdate(text: String?, completion: @escaping () -> Void)
+    func filterContentForSearchText(_ searchText: String)
     
     func fetchHeroList(completion: @escaping() -> Void)
     func numberOfRows() -> Int
@@ -19,20 +23,45 @@ protocol HeroListViewModelProtocol: AnyObject {
 
 class HeroListViewModel: HeroListViewModelProtocol {
     var heroList: [Hero] = []
+    var filteredHeros: [Hero] = []
+    
+    var isFiltering: Bool {
+        return searchController.isActive && !searchBarIsEmpty
+    }
+    
+    func searchUpdate(text: String?, completion: @escaping () -> Void) {
+        guard let text = text else {
+            return
+        }
+        
+    }
+    
+    
     
     func fetchHeroList(completion: @escaping () -> Void) {
-        NetworkManager.shared.fetchData { [unowned self] heroes in
-            self.heroList = heroes
-            completion()
+        NetworkManager.shared.fetchData(dataType: RickAndMorty.self, with: Link.rickAndMorty.rawValue) { [unowned self] result in
+            switch result {
+            case .success(let rickAndMorty):
+                self.heroList = rickAndMorty.results
+                completion()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        filteredHeros = heroList.filter { hero in
+            hero.name.lowercased().contains(searchText.lowercased())
         }
     }
     
     func numberOfRows() -> Int {
-        heroList.count
+        isFiltering ? filteredHeroes.count : heroList.count
     }
     
     func cellViewModel(at indexPath: IndexPath) -> HeroViewModelProtocol {
-        let hero = heroList[indexPath.row]
+        let hero = isFiltering ? filteredHeroes[indexPath.row] : heroList[indexPath.row]
         return HeroViewModel(hero: hero)
     }
     

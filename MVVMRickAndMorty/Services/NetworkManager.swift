@@ -11,27 +11,35 @@ enum Link: String {
     case rickAndMorty = "https://rickandmortyapi.com/api/character"
 }
 
+enum NetworkError: Error {
+    case invalidUrl
+    case noData
+    case decodingError
+}
+
 class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
     
-    func fetchData(completion: @escaping(_ heroes: [Hero]) -> Void) {
-        guard let ulr = URL(string: Link.rickAndMorty.rawValue) else { return }
+    func fetchData<T: Codable>(dataType: T.Type, with urlString: String?, completion: @escaping(Result<T, NetworkError>) -> Void) {
+        guard let ulr = URL(string: urlString ?? "") else {
+            completion(.failure(.invalidUrl))
+            return
+        }
         
         URLSession.shared.dataTask(with: ulr) { data, _, error in
             guard let data = data else {
-                print(error?.localizedDescription ?? "No description")
+                completion(.failure(.noData))
                 return
             }
 
             do {
-                let rickAndMorty = try JSONDecoder().decode(RickAndMorty.self, from: data)
-                let heroList = rickAndMorty.results
+                let type = try JSONDecoder().decode(T.self, from: data)
                 DispatchQueue.main.async {
-                    completion(heroList)
+                    completion(.success(type))
                 }
-            } catch let error {
-                print(error.localizedDescription)
+            } catch {
+                completion(.failure(.decodingError))
             }
         }.resume()
     }

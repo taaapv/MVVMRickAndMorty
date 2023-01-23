@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Heroes-->
+        <!--Hero List View Controller-->
         <scene sceneID="aUb-dD-ASG">
             <objects>
                 <viewController id="0pb-q6-Nvv" customClass="HeroListViewController" customModule="MVVMRickAndMorty" customModuleProvider="target" sceneMemberID="viewController">
@@ -43,7 +43,7 @@
                             <constraint firstItem="jsn-Mn-dFs" firstAttribute="bottom" secondItem="T60-H8-f0y" secondAttribute="bottom" id="rLH-AD-Q1L"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Heroes" id="4Gf-hp-w6w"/>
+                    <navigationItem key="navigationItem" id="4Gf-hp-w6w"/>
                     <connections>
                         <outlet property="tableView" destination="T60-H8-f0y" id="aeK-aW-zO7"/>
                     </connections>
@@ -61,42 +61,26 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wWh-VS-4GS">
-                                <rect key="frame" x="163.5" y="96" width="48" height="24"/>
+                                <rect key="frame" x="163.5" y="44" width="48" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ImX-z2-tak">
-                                <rect key="frame" x="67.5" y="150" width="240" height="240"/>
+                                <rect key="frame" x="67.5" y="98" width="240" height="240"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="qHO-oR-S6U"/>
                                     <constraint firstAttribute="height" constant="240" id="sPq-LN-o3a"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="REU-9l-3bp">
-                                <rect key="frame" x="20" y="420" width="335" height="20.5"/>
+                                <rect key="frame" x="20" y="368" width="335" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9c-Ja-AaO">
-                                <rect key="frame" x="62.5" y="604" width="250" height="43"/>
-                                <color key="backgroundColor" systemColor="systemTealColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="bgW-8d-Vn6"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="eUm-3s-QdH"/>
-                                </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Добавить в избранное">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="toggleButton:" destination="zlZ-7l-oxB" eventType="touchUpInside" id="ekk-3a-lp1"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UGD-S5-5F6">
-                                <rect key="frame" x="251" y="340" width="46" height="31"/>
+                                <rect key="frame" x="251" y="288" width="46" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="heart.fill" catalog="system"/>
                                 <connections>
@@ -112,19 +96,16 @@
                             <constraint firstItem="wWh-VS-4GS" firstAttribute="centerX" secondItem="7pb-Tu-0nV" secondAttribute="centerX" id="2sw-lq-e4P"/>
                             <constraint firstItem="UGD-S5-5F6" firstAttribute="top" secondItem="UdJ-7m-RDF" secondAttribute="top" constant="244" id="9Oy-kP-jpD"/>
                             <constraint firstItem="UGD-S5-5F6" firstAttribute="leading" secondItem="UdJ-7m-RDF" secondAttribute="leading" constant="251" id="LXn-3E-rLq"/>
-                            <constraint firstItem="c9c-Ja-AaO" firstAttribute="centerX" secondItem="7pb-Tu-0nV" secondAttribute="centerX" id="R33-hr-wsb"/>
                             <constraint firstItem="UdJ-7m-RDF" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="REU-9l-3bp" secondAttribute="trailing" constant="20" id="cMH-Vk-5Gh"/>
                             <constraint firstItem="REU-9l-3bp" firstAttribute="top" secondItem="ImX-z2-tak" secondAttribute="bottom" constant="30" id="eZj-HQ-0Me"/>
                             <constraint firstItem="ImX-z2-tak" firstAttribute="centerX" secondItem="7pb-Tu-0nV" secondAttribute="centerX" id="l2q-3K-mM9"/>
                             <constraint firstItem="REU-9l-3bp" firstAttribute="leading" secondItem="UdJ-7m-RDF" secondAttribute="leading" constant="20" id="nMF-4c-eJp"/>
-                            <constraint firstItem="UdJ-7m-RDF" firstAttribute="bottom" secondItem="c9c-Ja-AaO" secondAttribute="bottom" constant="20" id="oLb-cM-YNE"/>
                             <constraint firstItem="REU-9l-3bp" firstAttribute="centerX" secondItem="7pb-Tu-0nV" secondAttribute="centerX" id="vlh-x5-Yob"/>
                             <constraint firstItem="UdJ-7m-RDF" firstAttribute="trailing" secondItem="UGD-S5-5F6" secondAttribute="trailing" constant="78" id="vyz-ll-idX"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ytZ-In-lOJ"/>
                     <connections>
-                        <outlet property="button" destination="c9c-Ja-AaO" id="soW-qn-AAm"/>
                         <outlet property="favoriteButton" destination="UGD-S5-5F6" id="tqs-mh-VU2"/>
                         <outlet property="heroImage" destination="ImX-z2-tak" id="IJI-9c-5lj"/>
                         <outlet property="infoLabel" destination="REU-9l-3bp" id="ULI-al-CKu"/>
@@ -140,8 +121,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7lS-oU-5Uq" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="ShB-yj-Ate">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ShB-yj-Ate">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -158,9 +139,6 @@
         <image name="heart.fill" catalog="system" width="128" height="109"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemTealColor">
-            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

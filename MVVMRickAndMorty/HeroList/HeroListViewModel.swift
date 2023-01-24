@@ -8,14 +8,16 @@
 import Foundation
 
 protocol HeroListViewModelProtocol: AnyObject {
-    var heroList: [Hero] { get }
+    var rickAndMorty: RickAndMorty { get }
     var filteredHeros: [Hero] { get }
     var isFiltering: Bool { get }
     
     func searchUpdate(text: String?, isActive: Bool)
     func filterContentForSearchText(_ searchText: String)
     
-    func fetchHeroList(completion: @escaping() -> Void)
+    func updateData(barButtonTag: Int, completion: @escaping(String?) -> Void)
+    
+    func fetchHeroList(with link: String, completion: @escaping() -> Void)
     func numberOfRows() -> Int
     
     func cellViewModel(at indexPath: IndexPath) -> HeroViewModelProtocol
@@ -23,21 +25,29 @@ protocol HeroListViewModelProtocol: AnyObject {
 }
 
 class HeroListViewModel: HeroListViewModelProtocol {
+    var rickAndMorty: RickAndMorty  = RickAndMorty(info: Info(pages: 0, next: "", prev: ""), results: [])
     var heroList: [Hero] = []
     var filteredHeros: [Hero] = []
     var isFiltering: Bool = false
     var searchText: String = ""
     
-    func fetchHeroList(completion: @escaping () -> Void) {
-        NetworkManager.shared.fetchData(dataType: RickAndMorty.self, with: Link.rickAndMorty.rawValue) { [unowned self] result in
+    func fetchHeroList(with link: String, completion: @escaping () -> Void) {
+        NetworkManager.shared.fetchData(dataType: RickAndMorty.self, with: link) { [unowned self] result in
             switch result {
             case .success(let rickAndMorty):
-                self.heroList = rickAndMorty.results
+                self.rickAndMorty = rickAndMorty
+                heroList = rickAndMorty.results
                 completion()
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func updateData(barButtonTag: Int, completion: @escaping(String?) -> Void) {
+        barButtonTag == 1
+        ? completion(rickAndMorty.info.next)
+        : completion(rickAndMorty.info.prev)
     }
     
     func searchUpdate(text: String?, isActive: Bool) {

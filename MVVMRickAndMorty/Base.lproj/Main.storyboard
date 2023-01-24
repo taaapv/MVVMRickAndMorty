@@ -43,7 +43,20 @@
                             <constraint firstItem="jsn-Mn-dFs" firstAttribute="bottom" secondItem="T60-H8-f0y" secondAttribute="bottom" id="rLH-AD-Q1L"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="4Gf-hp-w6w"/>
+                    <navigationItem key="navigationItem" id="4Gf-hp-w6w">
+                        <barButtonItem key="leftBarButtonItem" title="Prev" id="Shj-Bv-f69">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="updateData:" destination="0pb-q6-Nvv" id="vca-A9-5nL"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" tag="1" title="Next" id="gET-nf-Ntf">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="updateData:" destination="0pb-q6-Nvv" id="7Ff-4X-fmI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="T60-H8-f0y" id="aeK-aW-zO7"/>
                     </connections>

@@ -16,12 +16,10 @@ class HeroListViewController: UIViewController {
     
     private var viewModel: HeroListViewModelProtocol! {
         didSet {
-            viewModel.fetchHeroList { [unowned self] in
+            viewModel.fetchHeroList(with: Link.rickAndMorty.rawValue) { [unowned self] in
                 self.tableView.reloadData()
                 self.activityIndicator.stopAnimating()
             }
-            
-            
         }
     }
     
@@ -40,6 +38,14 @@ class HeroListViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let detailVC = segue.destination as? DetailViewController else { return }
         detailVC.viewModel = sender as? DetailViewModelProtocol
+    }
+    
+    @IBAction func updateData(_ sender: UIBarButtonItem) {
+        viewModel.updateData(barButtonTag: sender.tag) { [unowned self] link in
+            self.viewModel.fetchHeroList(with: link ?? "") { [unowned self] in
+                self.tableView.reloadData()
+            }
+        }
     }
     
     private func showActivityIndicator(in view: UIView) -> UIActivityIndicatorView {
